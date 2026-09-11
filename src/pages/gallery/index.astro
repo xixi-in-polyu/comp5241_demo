@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getGallery } from '../../lib/content'
+import { withBase } from '../../config/site.js'
+const gallery = await getGallery()
+---
+
+<BaseLayout title="Gallery | 26068705g" description="A small collection of photographs and everyday details.">
+  <header class="page-hero shell"><p class="eyebrow">Collected moments</p><h1>A life beyond<br /><em>the screen.</em></h1><p class="lead">Small scenes worth keeping. Images are resized for the web and stripped of location metadata before publishing.</p></header>
+  <section class="shell page-section">
+    {gallery.length > 0 ? <div class="gallery-grid">
+      {gallery.map((photo) => <button type="button" class="gallery-item" data-full={withBase(photo.image)} data-alt={photo.alt} data-caption={photo.caption || photo.title}>
+        <img src={withBase(photo.thumbnail)} alt={photo.alt} loading="lazy" /><span>{photo.caption || photo.title}</span>
+      </button>)}
+    </div> : <div class="empty-panel"><p class="eyebrow">The wall is ready</p><h2>Photographs will arrive from Obsidian.</h2><p>No original files or location metadata are published.</p></div>}
+  </section>
+  <dialog class="lightbox"><button type="button" class="lightbox-close" aria-label="Close image">Close ×</button><img alt="" /><p></p></dialog>
+  <script>
+    const dialog = document.querySelector('.lightbox')
+    document.querySelectorAll('.gallery-item').forEach((item) => item.addEventListener('click', () => {
+      if (!(dialog instanceof HTMLDialogElement) || !(item instanceof HTMLElement)) return
+      const image = dialog.querySelector('img'); const caption = dialog.querySelector('p')
+      if (image) { image.src = item.dataset.full || ''; image.alt = item.dataset.alt || '' }
+      if (caption) caption.textContent = item.dataset.caption || ''
+      dialog.showModal()
+    }))
+    dialog?.querySelector('.lightbox-close')?.addEventListener('click', () => { if (dialog instanceof HTMLDialogElement) dialog.close() })
+    dialog?.addEventListener('click', (event) => { if (event.target === dialog && dialog instanceof HTMLDialogElement) dialog.close() })
+  </script>
+</BaseLayout>

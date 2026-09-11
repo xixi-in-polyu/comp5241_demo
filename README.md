@@ -1,16 +1,34 @@
-# React + Vite
+# Personal homepage
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A static Astro homepage with React islands for interaction. It is built for GitHub Pages at `/comp5241_demo/` and does not require a server, database, or browser-side account tokens.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Build-time GitHub and optional LeetCode activity snapshots with stale-cache fallback
+- Obsidian-compatible Markdown notes, Wiki Links, backlinks, related notes, and Giscus comments
+- Hand-picked project collection that stays hidden until data exists
+- Photo pipeline that strips metadata, creates responsive images, and supports cached U²-Net cutouts
+- Lazy-loaded Matter.js sticker playground with touch, keyboard, pinning, reset, and reduced-motion support
+- Responsive gallery with a native dialog lightbox
 
-## React Compiler
+## Local development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```sh
+npm install
+npm run dev
+npm run build
+npm run check:links
+npm run lint
+```
 
-## Expanding the Oxlint configuration
+The local fallback content lives in `content/`. To build from another directory:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```sh
+CONTENT_SOURCE_DIR=/path/to/homepage-content npm run build
+```
+
+See [Content publishing](docs/CONTENT_PUBLISHING.md) for the private repository, Enveloppe, photo, Giscus, and repository-variable setup.
+
+## Deployment
+
+`.github/workflows/deploy-pages.yml` deploys on `main`, on a `content-updated` repository dispatch, and once per day. Activity or content API failures reuse cached data and do not block Pages deployment.

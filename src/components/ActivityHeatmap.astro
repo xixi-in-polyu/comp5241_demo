@@ -1,0 +1,38 @@
+---
+import type { ActivitySource } from '../types/activity'
+
+interface Props { source: ActivitySource; label: string }
+const { source, label } = Astro.props
+const cells = source.days.slice(-371)
+const updated = source.updatedAt ? new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(source.updatedAt)) : ''
+const total = source.totals.contributions ?? source.totals.all ?? 0
+---
+
+<article class="activity-card">
+  <div class="activity-card__head">
+    <div><p class="eyebrow">{label}</p><h3><a href={source.profileUrl} target="_blank" rel="noreferrer">@{source.username} ↗</a></h3></div>
+    <strong>{total.toLocaleString()}<span>{label === 'GitHub' ? ' contributions' : ' solved'}</span></strong>
+  </div>
+  {cells.length ? (
+    <div class="heatmap" role="img" aria-label={`${label} activity over the last year`}>
+      {cells.map((day) => <span class={`heat-cell heat-${day.level}`} title={`${day.date}: ${day.count}`} aria-label={`${day.date}: ${day.count}`}></span>)}
+    </div>
+  ) : (
+    <p class="activity-empty">Activity will appear after the next successful data refresh.</p>
+  )}
+  <p class="activity-meta">{source.status === 'stale' ? 'Cached data' : source.status === 'fresh' ? 'Synced' : 'Waiting for sync'}{updated && ` · ${updated}`}</p>
+</article>
+
+<style>
+  .activity-card { padding: 1.5rem; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.62); }
+  .activity-card__head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; margin-bottom: 1.4rem; }
+  .activity-card h3 { margin: .5rem 0 0; font-size: 1.05rem; }
+  .activity-card strong { text-align: right; font: 1.8rem/1 Fraunces, serif; }
+  .activity-card strong span { display: block; margin-top: .35rem; color: var(--muted); font: .72rem/1.2 'DM Sans', sans-serif; }
+  .heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px; gap: 3px; max-width: 100%; overflow-x: auto; padding-bottom: .35rem; scrollbar-width: thin; }
+  .heat-cell { width: 10px; height: 10px; border-radius: 2px; background: rgba(49,92,75,.09); }
+  .heat-1 { background: #cbdccf; }.heat-2 { background: #8cb49a; }.heat-3 { background: #4f8064; }.heat-4 { background: #244f3d; }
+  .activity-meta, .activity-empty { margin: 1rem 0 0; color: var(--muted); font-size: .78rem; }
+  .activity-empty { min-height: 52px; display: grid; place-items: center; border: 1px dashed var(--line); border-radius: 10px; text-align: center; }
+  @media (max-width: 520px) { .activity-card__head { flex-direction: column; }.activity-card strong { text-align: left; } }
+</style>

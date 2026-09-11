@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getNotes } from '../../lib/content'
+import { withBase } from '../../config/site.js'
+const notes = await getNotes()
+const tags = [...new Set(notes.flatMap((note) => note.tags))].sort()
+---
+
+<BaseLayout title="Notes | 26068705g" description="Notes about software, AI, learning, and the ideas in between.">
+  <header class="page-hero shell">
+    <p class="eyebrow">Digital garden</p><h1>Notes from the<br /><em>workbench.</em></h1>
+    <p class="lead">Ideas are published selectively from my private Obsidian vault. They may grow, change, or connect to something unexpected.</p>
+  </header>
+  <section class="shell page-section" data-note-browser>
+    {tags.length > 0 && <div class="filter-row" aria-label="Filter notes by tag">
+      <button class="tag is-active" type="button" data-tag="all">All</button>
+      {tags.map((tag) => <button class="tag" type="button" data-tag={tag}>{tag}</button>)}
+    </div>}
+    {notes.length > 0 ? <div class="note-list">
+      {notes.map((note) => <article class="note-card" data-tags={note.tags.join('|')}>
+        <p class="note-date"><time datetime={note.date}>{note.date}</time></p>
+        <div><h2><a href={withBase(`/notes/${note.slug}/`)}>{note.title} ↗</a></h2><p>{note.description}</p><div class="tags">{note.tags.map((tag) => <span class="tag">{tag}</span>)}</div></div>
+      </article>)}
+    </div> : <div class="empty-panel"><p class="eyebrow">Quiet for now</p><h2>The first public note is still being written.</h2><p>Only Obsidian notes explicitly marked for sharing appear here.</p></div>}
+  </section>
+  <script>
+    const browser = document.querySelector('[data-note-browser]')
+    browser?.querySelectorAll('[data-tag]').forEach((button) => button.addEventListener('click', () => {
+      const tag = button.getAttribute('data-tag')
+      browser.querySelectorAll('[data-tag]').forEach((item) => item.classList.toggle('is-active', item === button))
+      browser.querySelectorAll('[data-tags]').forEach((card) => { if (card instanceof HTMLElement) card.hidden = tag !== 'all' && !card.dataset.tags?.split('|').includes(tag || '') })
+    }))
+  </script>
+</BaseLayout>
+

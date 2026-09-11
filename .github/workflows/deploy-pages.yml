@@ -1,12 +1,16 @@
-name: Deploy to GitHub Pages
+name: Build and deploy homepage
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  repository_dispatch:
+    types: [content-updated]
+  schedule:
+    - cron: '17 2 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -18,23 +22,86 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout homepage
+        uses: actions/checkout@v6
+
+      - name: Checkout private public-content source
+        id: content
+        if: ${{ vars.CONTENT_REPO != '' }}
+        continue-on-error: true
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ vars.CONTENT_REPO }}
+          token: ${{ secrets.CONTENT_REPO_TOKEN }}
+          path: content-private
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
-      - name: Install dependencies
+      - name: Setup Python for photo cutouts
+        if: ${{ steps.content.outcome == 'success' }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Restore generated-photo cache
+        uses: actions/cache@v5
+        with:
+          path: .content-cache
+          key: sticker-cutouts-${{ runner.os }}-${{ hashFiles('content-private/**') }}
+          restore-keys: sticker-cutouts-${{ runner.os }}-
+
+      - name: Install site dependencies
         run: npm ci
 
-      - name: Build
+      - name: Install U²-Net photo pipeline
+        if: ${{ steps.content.outcome == 'success' }}
+        continue-on-error: true
+        run: pip install "rembg[cpu,cli]"
+
+      - name: Refresh activity cache
+        continue-on-error: true
+        run: npm run activity:fetch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Persist scheduled activity snapshot
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/data/activity-cache.json
+          git diff --cached --quiet || git commit -m "chore: refresh activity data"
+          git push
+
+      - name: Build with private content
+        if: ${{ steps.content.outcome == 'success' }}
         run: npm run build
+        env:
+          CONTENT_SOURCE_DIR: content-private
+          PUBLIC_GISCUS_REPO_ID: ${{ vars.GISCUS_REPO_ID }}
+          PUBLIC_GISCUS_CATEGORY: ${{ vars.GISCUS_CATEGORY }}
+          PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.GISCUS_CATEGORY_ID }}
+
+      - name: Build with repository fallback content
+        if: ${{ steps.content.outcome != 'success' }}
+        run: npm run build
+        env:
+          PUBLIC_GISCUS_REPO_ID: ${{ vars.GISCUS_REPO_ID }}
+          PUBLIC_GISCUS_CATEGORY: ${{ vars.GISCUS_CATEGORY }}
+          PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.GISCUS_CATEGORY_ID }}
+
+      - name: Check static links
+        run: npm run check:links
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 

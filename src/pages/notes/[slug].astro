@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import GiscusComments from '../../components/GiscusComments.astro'
+import { getNotes, type Note } from '../../lib/content'
+import { withBase } from '../../config/site.js'
+
+export async function getStaticPaths() {
+  return (await getNotes()).map((note) => ({ params: { slug: note.slug }, props: { note } }))
+}
+interface Props { note: Note }
+const { note } = Astro.props
+---
+
+<BaseLayout title={`${note.title} | 26068705g`} description={note.description}>
+  <article class="article-shell shell">
+    <header class="article-header">
+      <a class="back-link" href={withBase('/notes/')}>← All notes</a>
+      <p class="eyebrow">{note.date} · Updated {note.updated}</p>
+      <h1>{note.title}</h1><p class="lead">{note.description}</p>
+      <div class="tags">{note.tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+    </header>
+    <div class="prose" set:html={note.html}></div>
+    {(note.backlinks.length > 0 || note.related.length > 0) && <aside class="note-connections">
+      {note.backlinks.length > 0 && <div><p class="eyebrow">Linked from</p>{note.backlinks.map((item) => <a href={withBase(`/notes/${item.slug}/`)}>{item.title} ↗</a>)}</div>}
+      {note.related.length > 0 && <div><p class="eyebrow">Related</p>{note.related.map((item) => <a href={withBase(`/notes/${item.slug}/`)}>{item.title} ↗</a>)}</div>}
+    </aside>}
+    {note.comments && <GiscusComments noteId={note.id} />}
+  </article>
+</BaseLayout>
+

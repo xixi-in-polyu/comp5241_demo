@@ -1,0 +1,31 @@
+---
+import { siteConfig } from '../config/site.js'
+interface Props { noteId: string }
+const { noteId } = Astro.props
+const ready = Boolean(siteConfig.giscus.repoId && siteConfig.giscus.categoryId)
+---
+
+{ready && (
+  <section class="comments" aria-label="Comments">
+    <h2>Continue the conversation</h2>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={siteConfig.giscus.repo}
+      data-repo-id={siteConfig.giscus.repoId}
+      data-category={siteConfig.giscus.category}
+      data-category-id={siteConfig.giscus.categoryId}
+      data-mapping="specific"
+      data-term={noteId}
+      data-strict="1"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="top"
+      data-theme="light"
+      data-lang="en"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </section>
+)}
+
