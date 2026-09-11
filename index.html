@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal homepage of a PolyU Information Technology student exploring backend systems, AI agents, and thoughtful technology." />
+    <title>26068705g | Information Technology & AI Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { ink: '#17211f', moss: '#315c4b', coral: '#d86f52', paper: '#f5f3ed' },
+            fontFamily: { display: ['Fraunces', 'Georgia', 'serif'], sans: ['DM Sans', 'Helvetica Neue', 'sans-serif'] },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-paper text-ink antialiased">
+    <header class="site-header fixed inset-x-0 top-0 z-50">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 lg:px-8" aria-label="Main navigation">
+        <a class="brand-mark" href="#top" aria-label="Home">26068705g<span>.</span></a>
+        <button class="menu-toggle rounded-full border border-ink/20 p-2 lg:hidden" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span class="block h-0.5 w-5 bg-ink"></span><span class="mt-1.5 block h-0.5 w-5 bg-ink"></span></button>
+        <div class="hidden items-center gap-8 text-sm font-semibold lg:flex"><a class="nav-link" href="#about">About</a><a class="nav-link" href="#craft">What I work on</a><a class="nav-link" href="#life">Beyond code</a><a class="contact-link" href="mailto:26068705g@connect.polyu.hk">Get in touch <span aria-hidden="true">↗</span></a></div>
+      </nav>
+      <div id="mobile-menu" class="mobile-menu hidden border-t border-ink/10 bg-paper px-6 pb-6 pt-2 lg:hidden"><a href="#about">About</a><a href="#craft">What I work on</a><a href="#life">Beyond code</a><a href="mailto:26068705g@connect.polyu.hk">Get in touch</a></div>
+    </header>
+
+    <main id="top">
+      <section class="hero mx-auto grid min-h-screen max-w-6xl items-center gap-16 px-6 pb-20 pt-32 lg:grid-cols-[1.15fr_0.85fr] lg:px-8 lg:pt-24">
+        <div class="reveal"><p class="eyebrow mb-6">PolyU · Information Technology · Shenzhen / Hong Kong</p><h1 class="max-w-4xl font-display text-6xl leading-[0.98] tracking-tight sm:text-7xl lg:text-8xl">Learning to build things that <em>think.</em></h1><p class="mt-8 max-w-xl text-lg leading-8 text-ink/65">I am an IT student exploring the space between dependable software systems and curious, capable AI agents.</p><div class="mt-10 flex flex-wrap items-center gap-5"><a class="button-primary" href="#craft">Explore my work <span aria-hidden="true">↓</span></a><a class="text-link" href="mailto:26068705g@connect.polyu.hk">26068705g@connect.polyu.hk <span aria-hidden="true">↗</span></a></div></div>
+        <div class="hero-orbit reveal reveal-delay relative mx-auto h-[25rem] w-full max-w-[25rem] sm:h-[31rem] sm:max-w-[31rem]" aria-label="Abstract visual representing connected systems"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="orbit-core"><span>curiosity<br /><i>→</i> practice</span></div><span class="orbit-label label-top">learn</span><span class="orbit-label label-right">build</span><span class="orbit-label label-bottom">reflect</span></div>
+      </section>
+
+      <section id="about" class="border-y border-ink/10 bg-white/40"><div class="mx-auto grid max-w-6xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-8"><div class="reveal"><p class="eyebrow">01 / About</p></div><div class="reveal max-w-3xl"><h2 class="section-title">A work in progress,<br /><em>on purpose.</em></h2><p class="mt-8 text-xl leading-9 text-ink/70">I am currently studying Information Technology at The Hong Kong Polytechnic University. Before that, I completed my bachelor's degree at China University of Geosciences (Wuhan).</p><p class="mt-5 text-lg leading-8 text-ink/60">I do not have every next step figured out yet. For now, I am choosing the honest route: stay curious, take small steps, and keep making the distance between an idea and a working system shorter.</p></div></div></section>
+
+      <section id="craft" class="mx-auto max-w-6xl px-6 py-24 lg:px-8"><div class="reveal mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end"><div><p class="eyebrow">02 / What I work on</p><h2 class="section-title mt-5">From foundations<br /><em>to frontier ideas.</em></h2></div><p class="max-w-xs text-sm leading-6 text-ink/55">The tools change quickly. The habit of understanding how things work stays.</p></div><div class="grid gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 md:grid-cols-3"><article class="skill-card reveal"><span class="skill-number">01</span><h3>Backend systems</h3><p>Building a practical foundation with Java, SpringBoot, Redis, MySQL, PostgreSQL, and Kafka.</p><div class="skill-tags"><span>Java</span><span>SpringBoot</span><span>Data</span></div></article><article class="skill-card reveal reveal-delay"><span class="skill-number">02</span><h3>Machine intelligence</h3><p>My undergraduate work introduced me to deep learning across computer vision and natural language processing.</p><div class="skill-tags"><span>Computer vision</span><span>NLP</span></div></article><article class="skill-card reveal reveal-delay-2"><span class="skill-number">03</span><h3>Agentic tools</h3><p>Exploring MCP, skills, CLI workflows, ReAct, and both naive RAG and GraphRAG while building a learning platform.</p><div class="skill-tags"><span>MCP</span><span>RAG</span><span>ReAct</span></div></article></div><div class="mt-8 flex flex-wrap gap-3 text-sm font-semibold text-ink/65"><span class="pill">C++</span><span class="pill">C#</span><span class="pill">Python</span><span class="pill">Java</span><span class="pill">PostgreSQL</span><span class="pill">Kafka</span></div></section>
+
+      <section id="life" class="life-section border-y border-ink/10"><div class="mx-auto grid max-w-6xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-8"><div class="reveal"><p class="eyebrow">03 / Beyond code</p><div class="mt-10 text-7xl" aria-hidden="true">◌</div></div><div class="reveal max-w-3xl"><h2 class="section-title">Keeping a life<br /><em>wide open.</em></h2><p class="mt-8 text-xl leading-9 text-ink/70">I live in Shenzhen and make the long journey to school in Hong Kong. I swim because I enjoy being in the water, not because I am particularly good at it. I read, watch films, dramas, and animation, and I follow curiosity wherever it leads.</p><p class="mt-5 text-lg leading-8 text-ink/60">Japanese came into my life through animation. Cantonese is the next language I want to grow into. Different interests do not always need to become a career plan; sometimes they simply make the person doing the work more awake.</p><div class="mt-10 grid max-w-xl grid-cols-2 gap-6 border-t border-ink/15 pt-6 text-sm"><div><span class="block text-ink/45">MBTI</span><strong class="mt-1 block text-lg">ISFP</strong></div><div><span class="block text-ink/45">Currently learning</span><strong class="mt-1 block text-lg">Japanese · Cantonese</strong></div></div></div></div></section>
+
+      <section class="mx-auto max-w-6xl px-6 py-24 text-center lg:px-8"><p class="eyebrow">A conversation starts small</p><h2 class="mx-auto mt-6 max-w-3xl font-display text-5xl leading-tight sm:text-6xl">Have an idea worth<br /><em>thinking through?</em></h2><a class="button-primary mt-10 inline-flex" href="mailto:26068705g@connect.polyu.hk">Say hello <span aria-hidden="true">↗</span></a></section>
+    </main>
+
+    <footer class="border-t border-ink/10"><div class="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-7 text-sm text-ink/50 sm:flex-row sm:items-center sm:justify-between lg:px-8"><span>© <span data-current-year></span> 26068705g</span><span>Learning in public, one small step at a time.</span></div></footer>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

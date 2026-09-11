@@ -1,0 +1,41 @@
+:root { --ink: #17211f; --moss: #315c4b; --coral: #d86f52; --paper: #f5f3ed; }
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+.site-header { background: rgba(245, 243, 237, .78); backdrop-filter: blur(16px); }
+.brand-mark { color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: -.04em; }
+.brand-mark span { color: var(--coral); }
+.nav-link { color: rgba(23, 33, 31, .62); transition: color .2s ease; }
+.nav-link:hover, .text-link:hover { color: var(--coral); }
+.contact-link { border-bottom: 1px solid var(--ink); padding-bottom: 3px; transition: color .2s ease, border-color .2s ease; }
+.contact-link:hover { border-color: var(--coral); color: var(--coral); }
+.mobile-menu a { display: block; padding: .7rem 0; font-weight: 600; }
+.eyebrow { color: var(--moss); font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.section-title { font-family: Fraunces, Georgia, serif; font-size: clamp(2.8rem, 6vw, 5.3rem); letter-spacing: -.045em; line-height: .98; }
+em { color: var(--coral); font-style: normal; }
+.button-primary { align-items: center; background: var(--moss); border-radius: 999px; color: white; display: inline-flex; font-size: .85rem; font-weight: 700; gap: .9rem; padding: .9rem 1.3rem; transition: background .2s ease, transform .2s ease; }
+.button-primary:hover { background: var(--coral); transform: translateY(-2px); }
+.text-link { color: rgba(23, 33, 31, .62); font-size: .85rem; font-weight: 600; transition: color .2s ease; }
+.hero-orbit { min-height: 25rem; overflow: hidden; }
+.orbit { border: 1px solid rgba(49, 92, 75, .24); border-radius: 50%; inset: 50% auto auto 50%; position: absolute; transform: translate(-50%, -50%) rotate(28deg); }
+.orbit-one { height: 64%; width: 64%; }
+.orbit-two { height: 84%; transform: translate(-50%, -50%) rotate(-35deg); width: 84%; }
+.orbit-three { border-color: rgba(216, 111, 82, .35); height: 98%; transform: translate(-50%, -50%) rotate(68deg); width: 48%; }
+.orbit-core { align-items: center; background: var(--moss); border-radius: 50%; box-shadow: 0 20px 50px rgba(49, 92, 75, .2); color: white; display: flex; font-family: Fraunces, Georgia, serif; font-size: 1.4rem; height: 9.5rem; justify-content: center; left: 50%; line-height: 1.15; position: absolute; text-align: center; top: 50%; transform: translate(-50%, -50%); width: 9.5rem; }
+.orbit-core i { color: #f0b49f; font-size: 1rem; }
+.orbit-label { color: var(--moss); font-size: .7rem; font-weight: 700; letter-spacing: .12em; position: absolute; text-transform: uppercase; }
+.label-top { left: 48%; top: 2%; }.label-right { right: 1%; top: 48%; }.label-bottom { bottom: 2%; left: 42%; }
+.skill-card { background: rgba(255, 255, 255, .54); min-height: 20rem; padding: 2rem; transition: background .25s ease, transform .25s ease; }
+.skill-card:hover { background: white; transform: translateY(-4px); }
+.skill-number { color: var(--coral); font-size: .75rem; font-weight: 700; }
+.skill-card h3 { font-family: Fraunces, Georgia, serif; font-size: 2rem; letter-spacing: -.03em; margin-top: 3rem; }
+.skill-card p { color: rgba(23, 33, 31, .62); font-size: .95rem; line-height: 1.7; margin-top: 1rem; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.8rem; }
+.skill-tags span, .pill { border: 1px solid rgba(23, 33, 31, .14); border-radius: 999px; color: rgba(23, 33, 31, .6); padding: .35rem .7rem; }
+.pill { display: inline-block; }
+.life-section { background: #e9eee8; }
+.life-section .section-title em { color: var(--moss); }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-delay { transition-delay: .12s; }.reveal-delay-2 { transition-delay: .24s; }
+@media (max-width: 640px) { .hero-orbit { transform: scale(.84); transform-origin: center; margin-bottom: -2rem; margin-top: -1rem; } .skill-card { min-height: auto; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
