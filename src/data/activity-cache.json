@@ -2,22 +2,12 @@
   "github": {
     "username": "xixi-in-polyu",
     "profileUrl": "https://github.com/xixi-in-polyu",
-    "updatedAt": "2026-11-07T08:50:02.019Z",
+    "updatedAt": "2026-11-08T09:01:54.107Z",
     "status": "fresh",
     "totals": {
       "contributions": 80
     },
     "days": [
-      {
-        "date": "2025-11-07",
-        "count": 0,
-        "level": 0
-      },
-      {
-        "date": "2025-11-08",
-        "count": 0,
-        "level": 0
-      },
       {
         "date": "2025-11-09",
         "count": 0,
@@ -1837,6 +1827,11 @@
         "date": "2026-11-07",
         "count": 2,
         "level": 1
+      },
+      {
+        "date": "2026-11-08",
+        "count": 0,
+        "level": 0
       }
     ]
   },
